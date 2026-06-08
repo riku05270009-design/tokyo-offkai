@@ -63,25 +63,57 @@ export default function FilterBar({ filters, onChange }: Props) {
         })}
       </div>
 
-      <div className="flex flex-wrap gap-2 items-center">
-        <span className="text-xs text-gray-500">日付：</span>
-        <input
-          type="date"
-          value={filters.dateFrom ?? ""}
-          onChange={(e) =>
-            onChange({ ...filters, dateFrom: e.target.value || undefined })
-          }
-          className="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <span className="text-xs text-gray-400">〜</span>
-        <input
-          type="date"
-          value={filters.dateTo ?? ""}
-          onChange={(e) =>
-            onChange({ ...filters, dateTo: e.target.value || undefined })
-          }
-          className="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap gap-2 items-center">
+          <span className="text-xs text-gray-500">日付：</span>
+          <input
+            type="date"
+            value={filters.dateFrom ?? ""}
+            onChange={(e) =>
+              onChange({ ...filters, dateFrom: e.target.value || undefined })
+            }
+            className="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <span className="text-xs text-gray-400">〜</span>
+          <input
+            type="date"
+            value={filters.dateTo ?? ""}
+            onChange={(e) =>
+              onChange({ ...filters, dateTo: e.target.value || undefined })
+            }
+            className="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="flex gap-2">
+          {[
+            { label: "今日", offset: 0 },
+            { label: "明日", offset: 1 },
+          ].map(({ label, offset }) => {
+            const t = new Date();
+            t.setDate(t.getDate() + offset);
+            const dateStr = t.toISOString().slice(0, 10);
+            const active = filters.dateFrom === dateStr && filters.dateTo === dateStr;
+            return (
+              <button
+                key={label}
+                onClick={() =>
+                  onChange({
+                    ...filters,
+                    dateFrom: active ? undefined : dateStr,
+                    dateTo: active ? undefined : dateStr,
+                  })
+                }
+                className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                  active
+                    ? "bg-blue-500 border-blue-500 text-white"
+                    : "border-gray-300 text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 items-center">
