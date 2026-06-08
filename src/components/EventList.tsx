@@ -27,6 +27,8 @@ export default function EventList() {
       if (f.isFree !== undefined) params.set("isFree", String(f.isFree));
       if (f.dateFrom) params.set("dateFrom", f.dateFrom);
       if (f.dateTo) params.set("dateTo", f.dateTo);
+      if (f.timeFrom) params.set("timeFrom", f.timeFrom);
+      if (f.timeTo) params.set("timeTo", f.timeTo);
       if (f.tags?.length) params.set("tags", f.tags.join(","));
       if (f.sources?.length) params.set("sources", f.sources.join(","));
 

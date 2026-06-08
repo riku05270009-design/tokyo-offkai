@@ -16,6 +16,8 @@ export async function GET(req: NextRequest) {
       : undefined,
     dateFrom: searchParams.get("dateFrom") ?? undefined,
     dateTo: searchParams.get("dateTo") ?? undefined,
+    timeFrom: searchParams.get("timeFrom") ?? undefined,
+    timeTo: searchParams.get("timeTo") ?? undefined,
     tags: searchParams.get("tags")?.split(",").filter(Boolean) ?? undefined,
     sources: (searchParams.get("sources")?.split(",").filter(Boolean) as EventSource[]) ?? undefined,
   };

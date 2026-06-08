@@ -114,6 +114,34 @@ export default function FilterBar({ filters, onChange }: Props) {
             );
           })}
         </div>
+        <div className="flex flex-wrap gap-2 items-center">
+          <span className="text-xs text-gray-500">時間：</span>
+          <input
+            type="time"
+            value={filters.timeFrom ?? ""}
+            onChange={(e) =>
+              onChange({ ...filters, timeFrom: e.target.value || undefined })
+            }
+            className="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <span className="text-xs text-gray-400">〜</span>
+          <input
+            type="time"
+            value={filters.timeTo ?? ""}
+            onChange={(e) =>
+              onChange({ ...filters, timeTo: e.target.value || undefined })
+            }
+            className="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          {(filters.timeFrom || filters.timeTo) && (
+            <button
+              onClick={() => onChange({ ...filters, timeFrom: undefined, timeTo: undefined })}
+              className="text-xs text-gray-400 hover:text-gray-600"
+            >
+              クリア
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 items-center">

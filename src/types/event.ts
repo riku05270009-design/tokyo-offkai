@@ -24,5 +24,7 @@ export interface EventFilters {
   isFree?: boolean;
   dateFrom?: string;
   dateTo?: string;
+  timeFrom?: string;
+  timeTo?: string;
   sources?: EventSource[];
 }
