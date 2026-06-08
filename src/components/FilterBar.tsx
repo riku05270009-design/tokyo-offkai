@@ -7,6 +7,8 @@ interface Props {
   onChange: (f: EventFilters) => void;
 }
 
+const GENRE_TAGS = ["人脈", "交流会", "異業種交流会"];
+
 const SOURCES: { value: EventSource; label: string }[] = [
   { value: "connpass", label: "connpass" },
   { value: "peatix", label: "Peatix" },
@@ -34,6 +36,32 @@ export default function FilterBar({ filters, onChange }: Props) {
         }
         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
+
+      <div className="flex flex-wrap gap-2 items-center">
+        <span className="text-xs text-gray-500">ジャンルで探す：</span>
+        {GENRE_TAGS.map((tag) => {
+          const active = filters.tags?.includes(tag);
+          return (
+            <button
+              key={tag}
+              onClick={() => {
+                const current = filters.tags ?? [];
+                const next = active
+                  ? current.filter((t) => t !== tag)
+                  : [...current, tag];
+                onChange({ ...filters, tags: next.length ? next : undefined });
+              }}
+              className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                active
+                  ? "bg-green-500 border-green-500 text-white"
+                  : "border-gray-300 text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              {tag}
+            </button>
+          );
+        })}
+      </div>
 
       <div className="flex flex-wrap gap-2 items-center">
         <span className="text-xs text-gray-500">日付：</span>
